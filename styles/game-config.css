@@ -1,0 +1,64 @@
+#game-config {
+  width: 90%;
+  max-width: 40rem;
+  margin: 3rem auto;
+  text-align: center;
+}
+@media (max-width: 48rem) {
+  #game-config {
+    max-width: 10rem;
+    margin: 2rem auto;
+  }
+  #game-config li {
+    width: 50%;
+    margin: 0.5rem !important;
+    padding: 1rem;
+  }
+  #game-config h2 {
+    font-size: 1rem !important;
+  }
+}
+#game-config ol {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#game-config li {
+  background-color: rgb(218, 188, 255);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  width: 50%;
+  margin: 1rem;
+  padding: 1rem;
+}
+#game-config > button {
+  margin: 1rem;
+}
+#game-config h3 {
+  font-size: 1rem;
+  margin: 0.5rem auto;
+  color: var(--bg-color);
+}
+#game-config h2 {
+  color: var(--bg-color);
+  margin: 0.5rem auto;
+  font-size: 1.5rem;
+}
+.game-opt {
+  margin: 0.5rem auto;
+  font-weight: bold;
+  font-size: 3rem;
+  color: var(--bg-color);
+}
+#edit-game-btn {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+#start-game-btn {
+  text-align: center;
+  margin-bottom: 1rem;
+}

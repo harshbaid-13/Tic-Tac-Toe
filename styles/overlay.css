@@ -1,0 +1,19 @@
+#backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  display: none;
+}
+aside {
+  position: fixed;
+  background-color: rgb(255, 255, 255);
+  top: calc(50% - 10rem);
+  left: calc(50% - 15rem);
+  width: 30rem;
+  padding: 1rem;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  display: none;
+}
