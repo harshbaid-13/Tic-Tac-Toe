@@ -27,9 +27,15 @@
         <form action="" id="formData">
           <div>
             <label for="playername">Player Name</label>
-            <input type="text" name="playername" id="playerName" required />
+            <input
+              type="text"
+              name="playername"
+              id="playerName"
+              required
+              maxlength="8"
+            />
           </div>
-          <p id="playerNameError">Please enter a correct username</p>
+          <p id="playerNameError">Username cannot have white spaces</p>
           <div>
             <button class="btn btn-alt" id="cancelConfig">Cancel</button>
             <button class="btn" type="submit" id="submitConfig">Submit</button>
@@ -41,7 +47,7 @@
           <li>
             <article>
               <h3>Player 1</h3>
-              <h2 id="playerNumnber1">Sugar</h2>
+              <h2 id="playerNumber1"></h2>
               <p class="game-opt">X</p>
               <button class="btn btn-alt" id="editPlayer1" data-playerid="1">
                 Edit
@@ -51,7 +57,7 @@
           <li>
             <article>
               <h3>Player 2</h3>
-              <h2 id="playerNumnber2">Spice</h2>
+              <h2 id="playerNumber2"></h2>
               <p class="game-opt">O</p>
               <button class="btn btn-alt" id="editPlayer2" data-playerid="2">
                 Edit
@@ -60,14 +66,13 @@
           </li>
         </ol>
       </section>
-      <div id="edit-game-btn">
-        <button class="btn">Edit Game Configuration</button>
-      </div>
       <div id="start-game-btn">
         <button class="btn" id="start-game-btn">Start New Game</button>
       </div>
-
       <section id="active-game">
+        <div id="edit-game-btn">
+          <button class="btn">Edit Game Configuration</button>
+        </div>
         <article class="game-over" id="game-over-win">
           <h2>You Won <span id="winner-name">PLAYER NAME</span>!</h2>
           <p>Click "Start New Game" above, to start a new game!</p>
@@ -84,18 +89,19 @@
           <span id="loser-name">PLAYER NAME</span>!
         </p>
         <ol class="board">
-          <li id="box0"></li>
-          <li id="box1"></li>
-          <li id="box2"></li>
-
-          <li id="box3"></li>
-          <li id="box4"></li>
-          <li id="box5"></li>
-
-          <li id="box6"></li>
-          <li id="box7"></li>
-          <li id="box8"></li>
+          <li data-r="0" data-c="0"></li>
+          <li data-r="0" data-c="1"></li>
+          <li data-r="0" data-c="2"></li>
+          <li data-r="1" data-c="0"></li>
+          <li data-r="1" data-c="1"></li>
+          <li data-r="1" data-c="2"></li>
+          <li data-r="2" data-c="0"></li>
+          <li data-r="2" data-c="1"></li>
+          <li data-r="2" data-c="2"></li>
         </ol>
+        <div id="undo-chance-btn">
+          <button class="btn">Undo</button>
+        </div>
       </section>
     </main>
   </body>

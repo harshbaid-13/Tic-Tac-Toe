@@ -1,31 +1,54 @@
-let editedPlayer = "0";
-let player1Name = "Sugar";
-let player2Name = "Spice";
-
-const backdrop = document.getElementById("backdrop");
-const configSettings = document.querySelector("aside");
-const activeGame = document.getElementById("active-game");
-const gameConfig = document.getElementById("game-config");
-const boardGame = document.querySelector(".board");
-
-const formElement = document.getElementById("formData");
-const cancelConfig = document.getElementById("cancelConfig");
-const playerNameError = document.getElementById("playerNameError");
-const playerName = document.getElementById("playerName");
-const playerNumnber1 = document.getElementById("playerNumnber1");
-const playerNumnber2 = document.getElementById("playerNumnber2");
+let editId = 0;
+playerDetails = [
+  {
+    name: "Sugar",
+    // name: "",
+    symbol: "X",
+  },
+  {
+    name: "Spice",
+    // name: "",
+    symbol: "O",
+  },
+];
+//buttons
+const editPlayerOne = document.getElementById("editPlayer1");
+const editPlayerTwo = document.getElementById("editPlayer2");
+const cancelEdit = document.getElementById("cancelConfig");
 const startGameBtn = document.getElementById("start-game-btn");
-const editConfigBtn = document.getElementById("edit-game-btn");
-
-const editPlayer1 = document.getElementById("editPlayer1");
-const editPlayer2 = document.getElementById("editPlayer2");
-
-editPlayer1.addEventListener("click", changeConfig);
-editPlayer2.addEventListener("click", changeConfig);
-
-cancelConfig.addEventListener("click", closeConfig);
+const editGameBtn = document.getElementById("edit-game-btn");
+const undoBtn = document.getElementById("undo-chance-btn");
+const boardItems = document.querySelectorAll(".board li");
+//sections
+const headerSection = document.querySelector("header");
+const editSection = document.querySelector("aside");
+const backdrop = document.getElementById("backdrop");
+const form = document.querySelector("form");
+const playerName = document.getElementById("playerName");
+const playerNameError = document.getElementById("playerNameError");
+const gameConfig = document.getElementById("game-config");
+const activeGame = document.getElementById("active-game");
+const winGame = document.getElementById("game-over-win");
+const tieGame = document.getElementById("game-over-tie");
+const activePlayerName = document.getElementById("active-player-name");
+const before_won = document.querySelector(".before_won");
+const after_won = document.querySelector(".after_won");
+const loserPlayerName = document.getElementById("loser-name");
+const winnerPlayerName = document.getElementById("winner-name");
+//handling buttons
+editPlayerOne.addEventListener("click", openConfig);
+editPlayerTwo.addEventListener("click", openConfig);
+cancelEdit.addEventListener("click", closeConfig);
 backdrop.addEventListener("click", closeConfig);
-playerName.addEventListener("keyup", checkInput);
-formElement.addEventListener("submit", submitConfigData);
 startGameBtn.addEventListener("click", startGame);
-editConfigBtn.addEventListener("click", editConfig);
+editGameBtn.addEventListener("click", gotoGameConfig);
+undoBtn.addEventListener("click", undoChance);
+for (let i = 0; i < 9; i++) {
+  boardItems[i].addEventListener("click", getMarked);
+}
+//handling sections
+form.addEventListener("submit", submitConfig);
+playerName.addEventListener("keyup", checkText);
+//extras
+document.getElementById("playerNumber1").textContent = playerDetails[0].name;
+document.getElementById("playerNumber2").textContent = playerDetails[1].name;

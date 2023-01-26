@@ -1,155 +1,110 @@
-let chance = "X";
+let chance = 1;
 let board = [
-  ["", "", ""],
-  ["", "", ""],
-  ["", "", ""],
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0],
 ];
+let moves = [];
 let won = false;
-function resetBoard() {
-  board = [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
-  ];
-  won = false;
-  chance = "X";
-  document.getElementById("box0").textContent = "";
-  document.getElementById("box1").textContent = "";
-  document.getElementById("box2").textContent = "";
-  document.getElementById("box3").textContent = "";
-  document.getElementById("box4").textContent = "";
-  document.getElementById("box5").textContent = "";
-  document.getElementById("box6").textContent = "";
-  document.getElementById("box7").textContent = "";
-  document.getElementById("box8").textContent = "";
-  document.getElementById("box0").classList.remove("disabled");
-  document.getElementById("box1").classList.remove("disabled");
-  document.getElementById("box2").classList.remove("disabled");
-  document.getElementById("box3").classList.remove("disabled");
-  document.getElementById("box4").classList.remove("disabled");
-  document.getElementById("box5").classList.remove("disabled");
-  document.getElementById("box6").classList.remove("disabled");
-  document.getElementById("box7").classList.remove("disabled");
-  document.getElementById("box8").classList.remove("disabled");
-  document.querySelector(".after_won").style.display = "none";
-  document.querySelector(".before_won").style.display = "block";
-  document.getElementById("game-over-win").style.display = "none";
-  document.getElementById("game-over-tie").style.display = "none";
-}
-function isFull() {
+function checkResult() {
   for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (board[i][j] === "") return false;
-    }
+    if (
+      board[i][0] !== 0 &&
+      board[i][0] === board[i][1] &&
+      board[i][1] === board[i][2]
+    )
+      return board[i][0];
   }
-  return true;
+  for (let i = 0; i < 3; i++) {
+    if (
+      board[0][i] !== 0 &&
+      board[0][i] === board[1][i] &&
+      board[1][i] === board[2][i]
+    )
+      return board[0][i];
+  }
+  if (
+    (board[1][1] !== 0 &&
+      board[0][0] === board[1][1] &&
+      board[1][1] === board[2][2]) ||
+    (board[2][0] === board[1][1] && board[1][1] === board[0][2])
+  )
+    return board[1][1];
+  if (moves.length == 9) return -1;
+  return 0;
 }
-function checkWinner() {
-  if (
-    (board[0][0] == "X" && board[0][1] == "X" && board[0][2] == "X") ||
-    (board[0][0] == "O" && board[0][1] == "O" && board[0][2] == "O")
-  )
-    return true;
-  if (
-    (board[1][0] == "X" && board[1][1] == "X" && board[1][2] == "X") ||
-    (board[1][0] == "O" && board[1][1] == "O" && board[1][2] == "O")
-  )
-    return true;
-  if (
-    (board[2][0] == "X" && board[2][1] == "X" && board[2][2] == "X") ||
-    (board[2][0] == "O" && board[2][1] == "O" && board[2][2] == "O")
-  )
-    return true;
-  if (
-    (board[0][0] == "X" && board[1][0] == "X" && board[2][0] == "X") ||
-    (board[0][0] == "O" && board[1][0] == "O" && board[2][0] == "O")
-  )
-    return true;
-  if (
-    (board[0][1] == "X" && board[1][1] == "X" && board[2][1] == "X") ||
-    (board[0][1] == "O" && board[1][1] == "O" && board[2][1] == "O")
-  )
-    return true;
-  if (
-    (board[0][2] == "X" && board[1][2] == "X" && board[2][2] == "X") ||
-    (board[0][2] == "O" && board[1][2] == "O" && board[2][2] == "O")
-  )
-    return true;
-  if (
-    (board[0][0] == "X" && board[1][1] == "X" && board[2][2] == "X") ||
-    (board[0][0] == "O" && board[1][1] == "O" && board[2][2] == "O")
-  )
-    return true;
-  if (
-    (board[0][2] == "X" && board[1][1] == "X" && board[2][0] == "X") ||
-    (board[0][2] == "O" && board[1][1] == "O" && board[2][0] == "O")
-  )
-    return true;
-  return false;
+function undoChance() {
+  if (moves.length == 0) return;
+  const lastElement = moves[moves.length - 1];
+  const boardElement = lastElement.element;
+  moves.pop();
+  board[lastElement.r][lastElement.c] = 0;
+  boardElement.classList.remove("disabled");
+  chance = chance == 1 ? 2 : 1;
+  activePlayerName.textContent = playerDetails[chance - 1].name;
+  boardElement.textContent = "";
 }
-function markIt(event) {
-  if (event.target.textContent != "" || won) {
+function getMarked(event) {
+  const boardElement = event.target;
+  rowNum = boardElement.dataset.r;
+  colNum = boardElement.dataset.c;
+  if (board[rowNum][colNum] !== 0 || won) return;
+  board[rowNum][colNum] = chance;
+  moves.push({ r: rowNum, c: colNum, element: boardElement });
+  chance = chance == 1 ? 2 : 1;
+  activePlayerName.textContent = playerDetails[chance - 1].name;
+  boardElement.classList.add("disabled");
+  boardElement.textContent = playerDetails[board[rowNum][colNum] - 1].symbol;
+  results = checkResult();
+  if (results == 0) return;
+  activeGame.style.height = "auto";
+  before_won.style.display = "none";
+  undoBtn.style.display = "none";
+  if (results == -1) {
+    tieGame.style.display = "block";
     return;
   }
-  const rowNum = Math.floor(event.target.id[3] / 3);
-  const colNum = event.target.id[3] % 3;
-  board[rowNum][colNum] = chance;
-  //   console.log(board);
-  event.target.classList.add("disabled");
-  event.target.textContent = board[rowNum][colNum];
-  if (checkWinner()) {
-    won = true;
-    if (chance == "X") {
-      winner = player1Name;
-      loser = player2Name;
-    } else {
-      winner = player2Name;
-      loser = player1Name;
-    }
-    document.getElementById("winner-name").textContent = winner;
-    document.getElementById("game-over-win").style.display = "block";
-    console.log(chance + " is the winner");
-  }
-  chance = chance == "X" ? "O" : "X";
-  if (!won && chance == "X")
-    document.getElementById("active-player-name").textContent = player1Name;
-  else document.getElementById("active-player-name").textContent = player2Name;
-  if (won) {
-    document.getElementById("start-game-btn").style.display = "block";
-    document.getElementById("loser-name").textContent = loser;
-    document.querySelector(".after_won").style.display = "block";
-    document.querySelector(".before_won").style.display = "none";
-  }
-  if (isFull() && !won) {
-    document.getElementById("game-over-tie").style.display = "block";
-    document.getElementById("start-game-btn").style.display = "block";
-    document.querySelector(".before_won").style.display = "none";
-  }
+  won = true;
+  winnerPlayerName.textContent = playerDetails[chance % 2].name;
+  loserPlayerName.textContent = playerDetails[chance - 1].name;
+  winGame.style.display = "block";
+  after_won.style.display = "block";
+  startGameBtn.style.display = "block";
+  startGameBtn.style.marginBottom = "-1rem";
+  startGameBtn.style.marginTop = "1rem";
 }
-function editConfig() {
+function gotoGameConfig() {
+  headerSection.style.display = "block";
   gameConfig.style.display = "block";
-  editConfigBtn.style.display = "none";
+  startGameBtn.style.display = "block";
+  editGameBtn.style.display = "none";
+  undoBtn.style.display = "none";
   activeGame.style.display = "none";
-  document.getElementById("start-game-btn").style.display = "block";
 }
 function startGame() {
-  resetBoard();
-  if (player1Name == "" && player2Name == "") {
-    alert("Please enter valid player name");
-    return;
+  board = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+  ];
+  moves = [];
+  for (let i = 0; i < 9; i++) {
+    boardItems[i].textContent = "";
+    boardItems[i].classList.remove("disabled");
   }
-  document.getElementById("active-player-name").textContent = player1Name;
-  document.getElementById("start-game-btn").style.display = "none";
-  activeGame.style.display = "block";
+  won = false;
+  chance = 1;
+  headerSection.style.display = "none";
   gameConfig.style.display = "none";
-  editConfigBtn.style.display = "block";
-  document.getElementById("box0").addEventListener("click", markIt);
-  document.getElementById("box1").addEventListener("click", markIt);
-  document.getElementById("box2").addEventListener("click", markIt);
-  document.getElementById("box3").addEventListener("click", markIt);
-  document.getElementById("box4").addEventListener("click", markIt);
-  document.getElementById("box5").addEventListener("click", markIt);
-  document.getElementById("box6").addEventListener("click", markIt);
-  document.getElementById("box7").addEventListener("click", markIt);
-  document.getElementById("box8").addEventListener("click", markIt);
+  startGameBtn.style.display = "none";
+  editGameBtn.style.display = "block";
+  undoBtn.style.display = "block";
+  activeGame.style.display = "flex";
+  tieGame.style.display = "none";
+  winGame.style.display = "none";
+  after_won.style.display = "none";
+  activePlayerName.textContent = playerDetails[0].name;
+  startGameBtn.style.marginBottom = "";
+  startGameBtn.style.marginTop = "";
+  activeGame.style.height = "100vh";
 }

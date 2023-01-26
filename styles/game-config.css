@@ -26,7 +26,7 @@
   padding: 0;
 }
 #game-config li {
-  background-color: rgb(218, 188, 255);
+  background-color: rgb(145, 145, 145);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   width: 50%;
@@ -56,6 +56,11 @@
   text-align: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  display: none;
+}
+#undo-chance-btn {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   display: none;
 }
 #start-game-btn {
