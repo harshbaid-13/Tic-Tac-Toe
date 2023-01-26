@@ -107,4 +107,5 @@ function startGame() {
   startGameBtn.style.marginBottom = "";
   startGameBtn.style.marginTop = "";
   activeGame.style.height = "100vh";
+  before_won.style.display = "block";
 }
