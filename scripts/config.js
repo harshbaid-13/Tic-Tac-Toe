@@ -26,8 +26,17 @@ function submitConfig(event) {
     playerDetails[editId].name;
   removeConfigBox();
 }
-function checkText() {
+function checkText(event) {
   text = playerName.value;
+  if (event.key === "Enter") {
+    if (text.includes(" ")) {
+      return;
+    }
+    playerDetails[editId].name = text;
+    document.getElementById(`playerNumber${editId + 1}`).textContent =
+      playerDetails[editId].name;
+    removeConfigBox();
+  }
   if (text.includes(" ")) {
     form.classList.add("error");
     playerNameError.style.display = "block";

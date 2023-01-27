@@ -48,7 +48,7 @@ for (let i = 0; i < 9; i++) {
 }
 //handling sections
 form.addEventListener("submit", submitConfig);
-playerName.addEventListener("keyup", checkText);
+playerName.addEventListener("keydown", checkText);
 //extras
 document.getElementById("playerNumber1").textContent = playerDetails[0].name;
 document.getElementById("playerNumber2").textContent = playerDetails[1].name;
