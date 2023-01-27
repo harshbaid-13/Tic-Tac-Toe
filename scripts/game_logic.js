@@ -60,6 +60,9 @@ function getMarked(event) {
   activeGame.style.height = "auto";
   before_won.style.display = "none";
   undoBtn.style.display = "none";
+  startGameBtn.style.display = "block";
+  startGameBtn.style.marginBottom = "-1rem";
+  startGameBtn.style.marginTop = "1rem";
   if (results == -1) {
     tieGame.style.display = "block";
     return;
@@ -69,9 +72,6 @@ function getMarked(event) {
   loserPlayerName.textContent = playerDetails[chance - 1].name;
   winGame.style.display = "block";
   after_won.style.display = "block";
-  startGameBtn.style.display = "block";
-  startGameBtn.style.marginBottom = "-1rem";
-  startGameBtn.style.marginTop = "1rem";
 }
 function gotoGameConfig() {
   headerSection.style.display = "block";
